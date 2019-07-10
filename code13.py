@@ -5,11 +5,10 @@ class Solution(object):
         value=0
         while len(s)>0:
             for i in range(0,len(bases)):
-                if s.startwith(symbols[i]):
+                if s.startswith(symbols[i]):
                     value=value+bases[i]
                     s=s[len(symbols[i]):]
                     break
         return value
-
 s=Solution()
 print(s.romanToInt('XX'))
