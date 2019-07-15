@@ -1,32 +1,24 @@
-from bisect import bisect_left
 class Solution(object):
     def threeSum(self, nums):
-        self.result=[]
+        result=[]
+        fnd=set()
         nums.sort()
-        index=bisect_left(nums,0)
-        negavite=nums[:index]
-        non_negative=nums[index:]
-        self.search3sum(negavite,non_negative)
-        self.search3sum(non_negative,negavite)
-        if non_negative.count(0) >=3:
-            self.result.append([0,0,0])
-        return self.result
-    def search3sum(self,key_gen_list,key_search_list):
-        for i in range(0,len(key_gen_list)-1):
-            for j in range(i+1,len(key_gen_list)):
-                search_key=-(key_gen_list[i]+key_gen_list[j])
-                search_index=self.binary_search(key_search_list,search_key)
-                if search_index!=-1:
-                    find=[key_gen_list[i],key_gen_list[j],key_search_list[search_index]]
-                    find.sort()
-                    if find not in self.result:
-                        self.result.append(find)
-    def binary_search(self,nums,val):
-        index=bisect_left(nums,val)
-        if index<len(nums) and nums[index]==val:
-            return index
-        else:
-            return -1
+        for i,a in enumerate(nums[:-2]):
+            s=set()
+            if i>0 and nums[i-1]==a:
+                continue
+            for c in nums[i+1:]:
+                b=-(a+c)
+                if c in s:
+                    if (a,b,c) not in fnd:
+                        fnd.add((a,b,c))
+                        result.append([a,b,c])
+                s.add(b)
+
+
+        return result
+
+
 
 
 
