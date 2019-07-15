@@ -1,17 +1,15 @@
 class Solution(object):
     def generateParenthesis(self, n):
-        return list(self.generate(n),[])
-    def generate(self,n,results):
-        if n==1:
-            return set(['()'])
-        else:
-            lst=self.generate(n-1)
-            print(lst)
-            newLst=[]
-            for res in lst:
-                newLst.append('('+res+')')
-                newLst.append('()'+res)
-                newLst.append(res+'()')
-            return set(newLst)
+        self.results=set()
+
+        def back(opn,clos,ptrn):
+            if opn==0 and clos==0:
+                self.results.add(ptrn)
+            if opn>0:
+                back(opn-1,clos,ptrn+'(')
+            if clos>opn:
+                back(opn,clos-1,ptrn+')')
+        back(n,n,'')
+        return list(self.results)
 s=Solution()
 print(s.generateParenthesis(4))
