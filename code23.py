@@ -47,7 +47,7 @@ class Solution(object):
 def makeList(nums):
     head=ListNode(nums[0])
     cur=head
-    for i in (1,len(nums)-1):
+    for i in range(1,len(nums)):
         cur.next=ListNode(nums[i])
         cur=cur.next
     return head
