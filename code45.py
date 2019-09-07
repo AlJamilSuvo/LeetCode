@@ -19,8 +19,3 @@ class Solution(object):
             jump_cnt+=1
 s=Solution()
 print(s.jump([10,9,8,7,6,5,4,3,2,1,1,0]))
-
-
-
-git config --global user.email "you@example.com"
-  git config --global user.name "Your Name
