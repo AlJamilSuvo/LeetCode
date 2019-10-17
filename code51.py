@@ -1,16 +1,16 @@
 class Solution(object):
     def solveNQueens(self, n):
-        self.board=[]
+        self.board=[[0 for _ in range(n)] for _ in range(n)]
+        self.solution=[]
         for i in range(n):
-            st=str()
-            for i in range(n):
-                st+='.'
-            board.append(st)
-        self.result=[]
-    
-    def backTrackNQueen(self,pos):
-    
+            isOk=True
+            for j in range(n):
+                
+
     def isSafe(self):
-        
+        return False
+s=Solution()
+s.solveNQueens(3)
+
         
         
