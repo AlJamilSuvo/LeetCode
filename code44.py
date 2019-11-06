@@ -1,49 +1,38 @@
 class Solution(object):
     def isMatch(self, s, p):
         self.dp=dict()
-        return self.checkInMatch(s,p,0,0)
+        return self.checkInMatch(s,p)
 
-    def checkInMatch(self,s,p,i,j):
-        if i==len(s) and j==len(p):
+    def checkInMatch(self,s,p):
+        if s=='' and (p=='' or (len(set(p))==1 and p[0]=='*')):
             return True
-        elif j==len(p):
+        elif s=='' or p=='':
             return False
-        elif i==len(s):
-            for pp in p[j:]:
-                if pp!='*':
-                    return False
-            return True
-        if p[j]=='*':
-            if (i+1,j) not in self.dp.keys():
-                check1=self.checkInMatch(s,p,i+1,j)
-                self.dp[(i+1,j)]=check1
-            else:
-                check1=self.dp[(i+1,j)]                
-            
-            if (i+1,j+1) not in self.dp.keys():
-                check2=self.checkInMatch(s,p,i+1,j+1)
-                self.dp[(i+1,j+1)]=check2
-            else:
-                check2=self.dp[(i+1,j+1)]
-
-            if (i,j+1) not in self.dp.keys():
-                check3=self.checkInMatch(s,p,i,j+1)
-                self.dp[(i,j+1)]=check3
-            else:
-                check3=self.dp[(i,j+1)]
-
-
-            return check1 or check2 or check3
-        elif p[j]=='?' or p[j]==s[i] :
-            if (i+1,j+1) not in self.dp.keys():
-                check2=self.checkInMatch(s,p,i+1,j+1)
-                self.dp[(i+1,j+1)]=check2
-            else:
-                check2=self.dp[(i+1,j+1)]
-            return check2
+        elif s+'.'+p in self.dp.keys():
+            return self.dp[s+'.'+p]
+        elif p[0]=='*':
+            flag10=self.dp[s[1:]+'.'+p] if s[1:]+'.'+p in self.dp.keys() else self.checkInMatch(s[1:],p)
+            flag01=self.dp[s+'.'+p[1:]] if s+'.'+p[1:] in self.dp.keys() else self.checkInMatch(s,p[1:])
+            flag11=self.dp[s[1:]+'.'+p[1:]] if s[1:]+'.'+p[1:] in self.dp.keys() else self.checkInMatch(s[1:],p[1:])
+            self.dp[s[1:]+'.'+p]=flag01
+            self.dp[s+'.'+p[1:]]=flag10
+            self.dp[s[1:]+'.'+p[1:]]=flag11
+            self.dp[s+'.'+p]=flag01 or flag10 or flag11
+            return self.dp[s+'.'+p]
+        elif p[0]=='?' or p[0]==s[0]:
+            flag11=self.dp[s[1:]+'.'+p[1:]] if s[1:]+'.'+p[1:] in self.dp.keys() else self.checkInMatch(s[1:],p[1:])
+            self.dp[s[1:]+'.'+p[1:]]=flag11
+            self.dp[s+'.'+p]=flag11
+            return flag11
         else:
+            self.dp[s+'.'+p]=False
             return False
 
 
 s=Solution()
-print(s.isMatch("a","a*"))
+print(s.isMatch('aa','a'))
+print(s.isMatch('aa','a*'))
+print(s.isMatch('aa','*'))
+print(s.isMatch('aa','*a'))
+print(s.isMatch('aa','*aa'))
+print(s.isMatch("aaabababaaabaababbbaaaabbbbbbabbbbabbbabbaabbababab","*ab***ba**b*b*aaab*b"))
