@@ -1,0 +1,2 @@
+def nextPermutation(lst):
+    
