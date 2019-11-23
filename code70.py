@@ -27,13 +27,21 @@ Explanation: There are three ways to climb to the top.
 
 class Solution(object):
     def climbStairs(self, n):
-        print(n)
+        dp=[-1 for _ in range(n+1)]
+        return self.findClimbStairs(n,dp)
+
+       
+    def findClimbStairs(self,n,dp):
         if n==0:
-            return 0
-        cnt=1+self.climbStairs(n-1)
+            return 1
+        if dp[n]!=-1:
+            return dp[n]
+        cnt=self.findClimbStairs(n-1,dp)
         if n>=2:
-            cnt+=1+self.climbStairs(n-2)
+            cnt+=self.findClimbStairs(n-2,dp)
+        dp[n]=cnt
         return cnt
+
 s=Solution()
 print(s.climbStairs(2))
 print(s.climbStairs(3))
