@@ -14,6 +14,7 @@ class Solution(object):
         j=0
         while j<n:
             print(i,j,nums1)
+            if i>
             if i<m and  nums2[j]<nums1[i] :
                 nums1.insert(i,nums2[j])
                 j+=1
