@@ -23,8 +23,7 @@ let perfrom  a ⊕ b ⊕ c ⊕ d ⊕ a ⊕ b ⊕ d
         =  a ⊕ a ⊕ b ⊕ b ⊕ d ⊕ d ⊕ c
         =    0   ⊕   0   ⊕   0   ⊕ c
         =  0 ⊕ c
-        =   c 
-
+        =   c
 
 '''
 
