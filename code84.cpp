@@ -1,47 +1,43 @@
 #include <bits/stdc++.h>
-
 using namespace std;
 
-class Solution {
+class Solution
+{
 public:
-    int largestRectangleArea(vector<int>& heights) {
-        stack<int> stk_index;
-        stack<int> stk_height;
-        heights.push_back(0);
-        int max_area=-1;
-        for(int i=0;i<heights.size();i++){
-            int last_index=i;
-            while(!stk_height.empty() && stk_height.top()>heights[i]){
-                int h=stk_height.top();
-                int w=i-stk_index.top();
-                int area=h*w;
-                if(area>max_area) max_area=area;
-                last_index=stk_index.top();
-                stk_height.pop();
-                stk_index.pop();
+    int largestRectangleArea(vector<int> &heights)
+    {
+        int maxArea = INT_MIN;
+        stack<int> indexStk;
+        stack<int> valueStk;
+        indexStk.push(-1);
+        valueStk.push(-1);
+        for (int i = 0; i < heights.size(); i++)
+        {
+            while (valueStk.top() > heights[i])
+            {
+                int h = valueStk.top();
+                valueStk.pop();
+                indexStk.pop();
+                int leftIndex = indexStk.top();
+                int w = i - leftIndex - 1;
+                if (h * w > maxArea)
+                    maxArea = h * w;
             }
-            stk_height.push(heights[i]);
-            stk_index.push(last_index);
+            valueStk.push(heights[i]);
+            indexStk.push(i);
         }
-        if(max_area==-1) max_area=0;
-        return max_area;
+        int rightLimit = heights.size();
+        while (valueStk.top() >= 0)
+        {
+            int h = valueStk.top();
+            valueStk.pop();
+            indexStk.pop();
+            int leftLimit = indexStk.top();
+            int w = rightLimit - leftLimit - 1;
+            if (h * w > maxArea)
+                maxArea = h * w;
+        }
 
+        return maxArea;
     }
 };
-
-
-
-int main(){
-    vector<int> vals;
-    vals.push_back(0);
-    vals.push_back(0);
-    vals.push_back(0);
-    vals.push_back(1);
-    vals.push_back(0);
-    vals.push_back(0);
-    vals.push_back(0);
-    Solution sol;
-    cout<<sol.largestRectangleArea(vals)<<endl;
-
-
-}

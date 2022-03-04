@@ -1,22 +1,18 @@
 #include "n_arr_util.hpp"
 
-class Solution
-{
+class Solution {
 public:
-    vector<int> postorder(Node *root)
-    {
-
-        vector<int> res;
-        if (root = nullptr)
-            return res;
-        stack<Node *> s;
-        queue<Node *> q;
-        s.push(root);
-        while (!s.empty())
-        {
-            Node * node = s.top();
-            s.pop();
-            q.push()
+    vector<int> postorder(Node* root) {
+        vector<int> result;
+        postorder(root, result);
+        return result;
+    }
+    
+    void postorder(Node *node, vector<int>& res){
+        if(node==nullptr) return;
+        for(int i=0;i<node->children.size();i++){
+            postorder(node->children[i], res);
         }
+        res.push_back(node->val);
     }
 };

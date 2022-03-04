@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-
 struct ListNode
 {
     int val;
@@ -37,5 +36,28 @@ ListNode *create_list_node(vector<int> vct)
             temp->next = new_list_node;
         temp = new_list_node;
     }
+    return result;
+}
+
+ListNode *create_list_node_cycle(vector<int> vct, int cs)
+{
+    ListNode *result = nullptr;
+    ListNode *temp = nullptr;
+    ListNode *cyclePnt = nullptr;
+    for (int i = 0; i < vct.size(); i++)
+    {
+        ListNode *new_list_node = new ListNode();
+
+        new_list_node->val = vct[i];
+        if (result == nullptr)
+            result = new_list_node;
+
+        if (temp != nullptr)
+            temp->next = new_list_node;
+        temp = new_list_node;
+        if (i == cs)
+            cyclePnt = temp;
+    }
+    temp->next = cyclePnt;
     return result;
 }

@@ -23,4 +23,3 @@ public:
         return n_1;
     }
 };
-};
